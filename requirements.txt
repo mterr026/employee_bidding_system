@@ -1,0 +1,8 @@
+fastapi==0.110.0
+uvicorn==0.30.1 #development server
+jinja2==3.0.2 #Servers html files
+aiofiles==0.7.0 #used for asynchronous programming
+requests==2.26.0 #handles HTTP requests
+sqlalchemy #manages ORM and provides security from sql injection
+psycopg2 #connects to postgres
+databases
