@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, HTTPException, APIRouter
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-from src.frontend.routers import frontend_router
+from frontend.routers import frontend_router
 
 app = FastAPI()
 
