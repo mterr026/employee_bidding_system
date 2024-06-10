@@ -1,1 +1,1 @@
-from frontend.routers import router as frontend
+from .routers import router as frontend_router
