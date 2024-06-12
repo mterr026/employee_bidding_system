@@ -8,12 +8,5 @@ app = FastAPI()
 app.include_router(frontend_router)
 
 
-@app.get('/')
-async def root(request: Request):
-    numberOne = 1
-    numberTwo = 4
-    sum = numberOne + numberTwo
-    return {"title": "Home", "sum": sum}
-
 
  
