@@ -3,7 +3,7 @@ from fastapi import FastAPI, APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from frontend.routers import router as frontend_router
-from SQL_app import models
+from SQL_app import models, schemas
 from SQL_app.config import DATABASE
 
 app = FastAPI()
@@ -23,7 +23,7 @@ def get_db():
             DATABASE.close()
 
 #sends information from form to the database
-@app.post("/submit", dependencies=[Depends(get_db)])
+@app.post("/submit", dependencies=[Depends(get_db)], response_model=schemas.Users)
 def submit_form(name: str = Form(...)):
     user_object = models.Users.create(name=name)
     return RedirectResponse(url="/form", status_code=303)
