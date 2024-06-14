@@ -1,0 +1,31 @@
+#Install postgres image in rancher desktop
+docker pull postgres:11
+
+#Run a container with postgres
+docker run --name postgres_db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=bidding_system -p 5432:5432 -d postgres:11
+
+
+# Start PostgreSQL
+service postgresql start
+
+# Install the public key for the repository:
+RUN curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
+
+# Create the repository configuration file:
+RUN sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+
+# Install for web mode only: 
+RUN sudo apt install pgadmin4-web -y
+# Start PostgreSQL
+
+RUN service postgresql start
+RUN export PGADMIN_PLATFORM_TYPE=debian
+
+# Start pgAdmin
+RUN python3 /usr/pgadmin4/web/pgAdmin4.py
+
+#after install of pgadmin4
+export PGADMIN_PLATFORM_TYPE=debian
+
+# Start pgAdmin
+python3 /usr/pgadmin4/web/pgAdmin4.py
