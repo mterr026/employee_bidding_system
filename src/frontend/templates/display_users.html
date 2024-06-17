@@ -7,9 +7,9 @@
     <ul>
         {% for user in users %}
             <li>
-                ID: {{ user.id }} | Name: {{ user.name }}
+                Name: {{ user.name }}
                 <form action="/delete_user" method="post" style="display:inline;">
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <input type="hidden" name="user_name" value="{{ user.name }}">
                     <button type="submit">Delete</button>
                 </form>
             </li>

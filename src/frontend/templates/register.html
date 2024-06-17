@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% block content %}<h1>Employee Registration</h1>
+    <form action="/register" method="post">
+        <label for="EIN">Employee Identification Number (EIN):</label><br>
+        <input type="number" id="EIN" name="EIN" required><br><br>
+
+        <label for="fname">First Name:</label><br>
+        <input type="text" id="fname" name="fname" required><br><br>
+
+        <label for="lname">Last Name:</label><br>
+        <input type="text" id="lname" name="lname" required><br><br>
+
+        <label for="startDate">Start Date:</label><br>
+        <input type="date" id="startDate" name="startDate" required><br><br>
+
+        <label for="role">Role:</label><br>
+        <input type="text" id="role" name="role" required><br><br>
+
+        <label for="securityQuestion">Security Question:</label><br>
+        <input type="text" id="securityQuestion" name="securityQuestion" required><br><br>
+
+        <label for="securityAnswer">Security Answer:</label><br>
+        <input type="text" id="securityAnswer" name="securityAnswer" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+    
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}{% endblock %}
+</body>
+</html>
+

@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{{title}}{% endblock %}
 
 {% block content %}
     <h1>{{ title }}</h1>
-    <p>The sum of 1 and 4 is {{ sum }}</p>
+    
+    {% for char in "apples" %}
+    {{char}}</br>
+    {% endfor %}
+
     <a href="/form">Form</a>
 {% endblock %}

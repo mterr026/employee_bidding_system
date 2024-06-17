@@ -11,17 +11,22 @@
         "dockerfile": "Dockerfile",
         "context": ".."
     },
-
+	"runArgs": [
+    "-e", "PGADMIN_DEFAULT_EMAIL=user@domain.com",
+    "-e", "PGADMIN_DEFAULT_PASSWORD=SuperSecret",
+    "-e", "PGADMIN_LISTEN_PORT=8080"
+  ],
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	 "forwardPorts": [8000, 5433],
+	 "forwardPorts": [8000, 5432, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "pip install -r requirements.txt",
-	"postStartCommand": "CMD service postgresql start && /usr/local/bin/setup.sh && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload",
+	//"postStartCommand": "/usr/local/bin/startup.sh && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload"
+	"postStartCommand": "pip install -r requirements.txt" //#service postgresql start && /usr/local/bin/startup.sh && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload",
 
 
 	// Configure tool-specific properties.

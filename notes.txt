@@ -12,10 +12,10 @@ service postgresql start
 RUN curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
 
 # Create the repository configuration file:
-RUN sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
 
 # Install for web mode only: 
-RUN sudo apt install pgadmin4-web -y
+RUN sudo apt install -y pgadmin4-web
 # Start PostgreSQL
 
 RUN service postgresql start
@@ -25,7 +25,43 @@ RUN export PGADMIN_PLATFORM_TYPE=debian
 RUN python3 /usr/pgadmin4/web/pgAdmin4.py
 
 #after install of pgadmin4
-export PGADMIN_PLATFORM_TYPE=debian
+RUN export PGADMIN_PLATFORM_TYPE=debian
 
 # Start pgAdmin
-python3 /usr/pgadmin4/web/pgAdmin4.py
+RUN python3 /usr/pgadmin4/web/pgdmin4.py
+
+########SETTING UP POSTGRES AND pgAdmin4##########
+#login as superuser
+sudo su 
+
+#start postgres
+service postgresql start
+
+#check postgres startup
+service postgresql status
+
+#set pgadmin platform type to debian
+export PGADMIN_PLATFORM_TYPE=debian
+
+#configure pgadmin4
+/usr/pgadmin4/bin/setup-web.sh --yes
+
+#start pgadmin
+/usr/pgadmin4/bin/setup-web.sh
+
+
+#set correct password for postgres
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD '${POSTGRES_PASSWORD}';"
+PGPASSWORD=your_new_password psql -h localhost -U postgres -d your_database_name
+
+PGPASSWORD=123 psql -h localhost -U postgres -d postgres
+
+#List the Contents of /usr/pgadmin4:
+ls -l /usr/pgadmin4
+
+#Starting pgAdmin4
+/usr/pgadmin4/venv/bin/python /usr/pgadmin4/web/pgAdmin4.py &
+
+#change port if necessary
+vim /usr/pgadmin4/web/config.py
+
