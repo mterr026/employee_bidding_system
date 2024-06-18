@@ -1,3 +1,16 @@
 Extensions:
 Install dev Container, python 
 .
+
+src/
+├── __pycache__/
+├── frontend/
+│   ├── __pycache__/
+│   └── templates/
+│       ├── base.html
+│       ├── display_users.html
+│       ├── form.html
+│       └── home.html
+├── __init__.py
+├── routers.py
+└── setup.py
